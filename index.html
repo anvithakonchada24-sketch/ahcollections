@@ -195,7 +195,7 @@ function confirmOrder(){
   let orderItems="";
   cart.forEach(i=>{orderItems+=i.name+" x "+i.qty+" = Rs."+i.price*i.qty+"\n";});
 
-  emailjs.send("service_123456","template_ORDER",{
+  emailjs.send("service_123456","template_xgijxrk",{
     customer_name:currentOrderDetails.name,
     phone:currentOrderDetails.phone,
     address:currentOrderDetails.address+", "+currentOrderDetails.city+" - "+currentOrderDetails.pincode,
