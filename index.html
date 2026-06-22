@@ -1,527 +1,601 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AH Collections</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init("5k8K3lISiv1nNEsSw");</script>
-
 <style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:Poppins;background:#fff;}
-.hidden{display:none;}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A84C;--gold-dark:#8B6914;--cream:#FAF8F4;--dark:#1A1209;--text:#3D2E0A;--border:#E8D9A0}
+body{font-family:'Georgia',serif;color:var(--text);background:#fff}
+button{cursor:pointer;font-family:'Georgia',serif}
+.page{display:none}
+.page.active{display:block}
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 50px;border-bottom:1px solid #f0e8d0;}
-.logo{font-family:Playfair Display;font-size:26px;color:#D4AF37;}
-.nav a{margin-left:20px;cursor:pointer;text-decoration:none;color:black;font-size:14px;}
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 36px;background:#FAF8F4;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-logo{font-size:17px;letter-spacing:4px;color:var(--gold-dark);font-weight:700;text-transform:uppercase}
+.nav-links{display:flex;gap:18px}
+.nav-links button{background:none;border:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text);opacity:.7;padding:4px 0;font-family:'Georgia',serif;cursor:pointer}
+.nav-links button:hover{opacity:1;color:var(--gold)}
 
-.hero{display:flex;justify-content:center;align-items:center;gap:40px;padding:40px;}
+/* HERO */
+.hero{background:#FAF3E0;padding:44px 36px 36px;text-align:center;border-bottom:1px solid var(--border)}
+.hero-logo-ring{width:130px;height:130px;margin:0 auto 18px;border-radius:50%;background:#fff;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-logo-ring img{width:118px;height:118px;object-fit:contain}
+.hero-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:400;color:var(--dark);line-height:1.2;margin-bottom:10px}
+.hero p{font-size:15px;color:#6B5320;line-height:1.7;max-width:460px;margin:0 auto 26px;font-weight:300}
+.shop-now-btn{padding:13px 44px;background:var(--gold);color:#fff;font-size:12px;letter-spacing:3px;text-transform:uppercase;border:none;border-radius:2px;transition:background .2s}
+.shop-now-btn:hover{background:var(--gold-dark)}
 
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding:50px 100px;}
+/* AVAILABLE STRIP */
+.avail-bar{background:#FDF8EC;border-bottom:1px solid var(--border);padding:18px 36px;text-align:center}
+.avail-bar h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:12px}
+.avail-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.avail-tag{padding:6px 16px;background:#F0E4B0;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dark);border-radius:2px}
 
-.card{border:1px solid #eee;padding:15px;text-align:center;cursor:pointer;transition:0.3s;position:relative;}
-.card img{width:100%;aspect-ratio:1/1;object-fit:cover;}
-.card:hover{transform:scale(1.05);}
+/* HOME PRODUCT PREVIEW CARDS */
+.preview-section{padding:28px 36px}
+.preview-section h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dark);text-align:center;margin-bottom:20px}
+.preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.preview-card{background:#FAF8F4;border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.preview-card:hover{border-color:var(--gold)}
+.preview-card .img-box{width:100%;height:140px;background:#F0E9D0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.preview-card .img-box img{width:100%;height:100%;object-fit:cover}
+.preview-card .img-box .placeholder{font-size:40px;color:var(--gold);opacity:.5}
+.upload-overlay{position:absolute;inset:0;background:rgba(139,105,20,.7);display:none;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.preview-card:hover .upload-overlay{display:flex}
+.upload-overlay span{font-size:11px;color:#fff;letter-spacing:1px;text-align:center;padding:0 8px}
+.upload-overlay .u-icon{font-size:22px;color:#fff}
+.preview-card .card-label{padding:12px 10px;text-align:center}
+.preview-card .card-label h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:3px}
+.preview-card .card-label p{font-size:11px;color:#8B7040;line-height:1.4}
+.preview-card input[type=file]{display:none}
 
-.btn{padding:10px 20px;border:1px solid #D4AF37;background:none;color:#D4AF37;cursor:pointer;font-family:Poppins;font-size:14px;}
-.btn:hover{background:#D4AF37;color:#fff;}
+/* SHOP PAGE */
+.shop-hdr{background:#FAF3E0;padding:22px 36px 18px;border-bottom:1px solid var(--border);text-align:center}
+.shop-hdr h2{font-size:24px;font-weight:400;color:var(--dark);margin-bottom:4px}
+.shop-hdr p{font-size:13px;color:#8B7040}
+.back-btn{display:inline-flex;align-items:center;gap:5px;margin-bottom:10px;background:none;border:1px solid var(--border);padding:6px 14px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-dark);border-radius:2px;cursor:pointer}
+.back-btn:hover{background:#F0E9D0}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px 36px}
+.cat-card{background:#FAF8F4;border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.cat-card:hover{border-color:var(--gold)}
+.cat-img-box{width:100%;height:180px;background:#F0E9D0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.cat-img-box img{width:100%;height:100%;object-fit:cover}
+.cat-img-box .placeholder{font-size:52px;color:var(--gold);opacity:.4}
+.cat-upload-ov{position:absolute;inset:0;background:rgba(139,105,20,.7);display:none;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.cat-card:hover .cat-upload-ov{display:flex}
+.cat-upload-ov span{font-size:11px;color:#fff;letter-spacing:1px;text-align:center}
+.cat-upload-ov .u-icon{font-size:22px;color:#fff}
+.cat-card input[type=file]{display:none}
+.cat-info{padding:14px 16px}
+.cat-info h3{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:5px}
+.cat-info p{font-size:12px;color:#8B7040;line-height:1.5}
+.cat-tag{display:inline-block;margin-top:8px;padding:3px 10px;background:#F0E4B0;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dark);border-radius:2px}
 
-.center-box{max-width:600px;margin:50px auto;text-align:center;padding:0 20px;}
-.center-box input{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:1px solid #ccc;font-family:Poppins;font-size:14px;}
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,18,9,.78);z-index:300;align-items:flex-start;justify-content:center;padding:30px 12px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{background:#FAF8F4;width:100%;max-width:640px;border-radius:8px;overflow:hidden;margin:auto}
+.mhdr{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#FAF3E0;position:sticky;top:0;z-index:10}
+.mhdr h3{font-size:18px;font-weight:400;color:var(--dark)}
+.mclose{background:none;border:none;font-size:22px;color:var(--gold-dark);cursor:pointer;line-height:1;padding:2px 6px}
+.mbody{padding:18px 22px}
 
-.cart-item{display:flex;justify-content:space-between;align-items:center;margin:15px 0;gap:10px;}
-.cart-item button{padding:5px 10px;border:none;background:#D4AF37;color:white;cursor:pointer;}
+/* MODAL HERO IMAGE */
+.modal-hero-img{width:100%;height:200px;background:#F0E9D0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer}
+.modal-hero-img img{width:100%;height:100%;object-fit:cover}
+.modal-hero-img .placeholder{font-size:60px;color:var(--gold);opacity:.35}
+.mhi-overlay{position:absolute;inset:0;background:rgba(139,105,20,.65);display:none;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+.modal-hero-img:hover .mhi-overlay{display:flex}
+.mhi-overlay span{font-size:12px;color:#fff;letter-spacing:1px}
+.mhi-overlay .u-icon{font-size:26px;color:#fff}
+.modal-hero-img input[type=file]{display:none}
 
-.upi-box{border:1px solid #D4AF37;border-radius:12px;padding:30px;margin:20px auto;max-width:400px;background:#fffdf5;}
-.upi-box img{width:180px;margin:10px auto;display:block;}
-.upi-id{font-size:18px;font-weight:bold;color:#D4AF37;letter-spacing:1px;margin:10px 0;}
-.upi-amount{font-size:22px;font-weight:bold;color:#333;margin:10px 0;}
-.upi-steps{text-align:left;font-size:13px;color:#555;line-height:2;margin:15px 0;}
-.success-box{background:#e8f9ee;border:1px solid #25D366;border-radius:10px;padding:20px;margin:20px auto;max-width:400px;color:#1a7a3a;font-size:15px;}
+/* MODAL ITEM GRID */
+.items-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dark);margin:18px 0 12px;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:6px}
+.items-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.ic{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative}
+.ic .item-img{width:100%;height:90px;background:#F0E9D0;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative}
+.ic .item-img img{width:100%;height:100%;object-fit:cover}
+.ic .item-img .placeholder{font-size:26px;color:var(--gold);opacity:.45}
+.ic .item-img .iov{position:absolute;inset:0;background:rgba(139,105,20,.65);display:none;align-items:center;justify-content:center;flex-direction:column;gap:2px}
+.ic .item-img:hover .iov{display:flex}
+.ic .item-img .iov span{font-size:9px;color:#fff;letter-spacing:.5px}
+.ic .item-img .iov .u-icon{font-size:18px;color:#fff}
+.ic .item-img input[type=file]{display:none}
+.ic .ic-info{padding:8px 8px}
+.ic .ic-info h4{font-size:11px;color:var(--dark);margin-bottom:2px;font-weight:400}
+.ic .ic-info p{font-size:10px;color:#8B7040;line-height:1.3}
+.ic .ic-info .pr{font-size:11px;color:var(--gold-dark);margin-top:4px;font-weight:700}
+.order-note{background:#FDF8EC;border:1px solid var(--border);border-radius:4px;padding:12px;text-align:center;font-size:12px;color:#6B5320;margin-top:4px}
 
-/* POPUP */
-.popup-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;justify-content:center;align-items:flex-start;overflow-y:auto;padding:30px 20px;}
-.popup-box{background:#fff;padding:35px 30px;width:100%;max-width:480px;border-radius:16px;text-align:left;position:relative;margin:auto;}
-.popup-box h2{font-family:Playfair Display;color:#D4AF37;text-align:center;margin-bottom:5px;}
-.popup-box p.subtitle{text-align:center;color:#888;font-size:13px;margin-bottom:20px;}
-.form-group{margin:12px 0;}
-.form-group label{display:block;font-size:13px;color:#555;margin-bottom:4px;font-weight:500;}
-.form-group input,.form-group textarea{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:8px;font-family:Poppins;font-size:14px;transition:border 0.2s;background:#fafafa;}
-.form-group input:focus,.form-group textarea:focus{outline:none;border-color:#D4AF37;background:#fff;}
-.form-group textarea{resize:vertical;min-height:75px;}
-.optional-tag{font-size:11px;color:#aaa;font-weight:400;margin-left:4px;}
-.colour-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
-.colour-chip{padding:6px 14px;border-radius:20px;border:1px solid #ddd;font-size:12px;cursor:pointer;transition:0.2s;background:#fff;color:#555;}
-.colour-chip.selected{border-color:#D4AF37;background:#D4AF37;color:#fff;}
-.upload-area{border:2px dashed #D4AF37;border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:#fffdf5;transition:0.2s;position:relative;}
-.upload-area:hover{background:#fff8e6;}
-.upload-area input[type="file"]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;}
-.upload-area p{margin:0;font-size:13px;color:#D4AF37;}
-.upload-area span{font-size:11px;color:#aaa;display:block;margin-top:4px;}
-.upload-preview{margin-top:10px;display:none;align-items:center;gap:10px;padding:8px 12px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;}
-.upload-preview img{width:40px;height:40px;object-fit:cover;border-radius:4px;}
-.url-divider{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:12px;color:#aaa;}
-.url-divider::before,.url-divider::after{content:'';flex:1;height:1px;background:#eee;}
-.submit-btn{width:100%;padding:13px;background:#D4AF37;color:#fff;border:none;border-radius:8px;font-family:Poppins;font-size:15px;cursor:pointer;margin-top:20px;transition:0.2s;}
-.submit-btn:hover{background:#c09b28;}
-.submit-btn:disabled{background:#ccc;cursor:not-allowed;}
-.close-btn{position:absolute;top:14px;right:16px;font-size:20px;cursor:pointer;color:#aaa;background:none;border:none;line-height:1;}
-.close-btn:hover{color:#333;}
-.status-msg{margin-top:12px;padding:10px;border-radius:6px;font-size:13px;text-align:center;display:none;}
-.status-msg.success{background:#e8f9ee;color:#1a7a3a;display:block;}
-.status-msg.error{background:#fdecea;color:#c0392b;display:block;}
+/* BANGLE DESIGNS */
+.bg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.bc{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer}
+.bc .bi-img{width:100%;height:80px;background:#F0E9D0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.bc .bi-img img{width:100%;height:100%;object-fit:cover}
+.bc .bi-img .placeholder{font-size:24px;color:var(--gold);opacity:.45}
+.bc .bi-img .iov{position:absolute;inset:0;background:rgba(139,105,20,.65);display:none;align-items:center;justify-content:center;flex-direction:column;gap:2px}
+.bc .bi-img:hover .iov{display:flex}
+.bc .bi-img .iov span{font-size:9px;color:#fff;letter-spacing:.5px}
+.bc .bi-img .iov .u-icon{font-size:18px;color:#fff}
+.bc .bi-img input[type=file]{display:none}
+.bc-info{padding:8px 8px}
+.bc-info h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);margin-bottom:2px}
+.bc-info p{font-size:10px;color:#8B7040;line-height:1.3}
+.bc-info .bp{font-size:11px;color:var(--gold-dark);margin-top:4px;font-weight:700}
 
-/* SHIMMER & MARQUEE */
-.shimmer-text{background:linear-gradient(90deg,#b8860b 0%,#FFD700 40%,#fff8dc 60%,#b8860b 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;font-family:Playfair Display;font-size:42px;margin:0;}
-@keyframes shimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
-.marquee-wrap{overflow:hidden;background:linear-gradient(135deg,#1a1a1a 0%,#2d2200 50%,#1a1a1a 100%);padding:18px 0;border-top:1px solid #D4AF37;border-bottom:1px solid #D4AF37;}
-.marquee-track{display:flex;gap:60px;animation:marquee 18s linear infinite;white-space:nowrap;width:max-content;}
-.marquee-track span{color:#D4AF37;font-size:14px;letter-spacing:3px;text-transform:uppercase;}
-.marquee-track span.dot{color:#fff8dc;font-size:18px;}
-@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* CUSTOMIZE FORM */
+.ct{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dark);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:700}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-dark)}
+.fg input,.fg select,.fg textarea{padding:9px 10px;border:1px solid var(--border);border-radius:2px;background:#fff;font-family:'Georgia',serif;font-size:12px;color:var(--dark);outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:70px}
+.fup{border:2px dashed var(--border);border-radius:4px;padding:16px;text-align:center;cursor:pointer;background:#FAF8F4}
+.fup:hover{border-color:var(--gold)}
+.fup input{display:none}
+.fup p{font-size:12px;color:#8B7040;margin-top:4px}
+.fup span{font-size:10px;color:#AAA}
+.sbtn{width:100%;padding:12px;background:var(--gold);color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;border-radius:2px;margin-top:12px;cursor:pointer}
+.sbtn:hover{background:var(--gold-dark)}
+.smsg{display:none;background:#EAF3DE;border:1px solid #97C459;border-radius:4px;padding:12px;text-align:center;font-size:13px;color:#27500A;margin-top:10px}
 
-/* TRUST BAR */
-.trust-bar{display:flex;justify-content:center;gap:40px;padding:25px 50px;background:#fffdf5;border-top:1px solid #f0e8d0;border-bottom:1px solid #f0e8d0;flex-wrap:wrap;}
-.trust-badge{display:flex;align-items:center;gap:10px;}
-.trust-badge .icon{width:38px;height:38px;background:#D4AF37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.trust-badge strong{display:block;color:#222;font-size:13px;}
-.trust-badge span{font-size:11px;color:#888;}
+footer{background:#1A1209;color:#C9A84C;text-align:center;padding:20px 36px;margin-top:20px}
+footer .fl{font-size:16px;letter-spacing:4px;margin-bottom:6px}
+footer p{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.6}
 
-/* SOLD OUT */
-.sold-out-badge{position:absolute;top:10px;left:10px;background:#e74c3c;color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:1px;z-index:10;}
-.card.sold-out img{opacity:0.5;filter:grayscale(60%);}
-.card.sold-out .btn-sold{width:100%;padding:9px;background:#e74c3c;color:#fff;border:none;border-radius:6px;font-family:Poppins;font-size:13px;cursor:pointer;margin-top:6px;transition:0.2s;}
-.card.sold-out .btn-sold:hover{background:#c0392b;}
-
-/* NOTIFY POPUP */
-.notify-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:2000;justify-content:center;align-items:center;}
-.notify-box{background:#fff;padding:30px;width:100%;max-width:380px;border-radius:16px;text-align:center;position:relative;}
-.notify-box h3{font-family:Playfair Display;color:#D4AF37;margin-bottom:5px;}
-.notify-box p{font-size:13px;color:#888;margin-bottom:15px;}
-.notify-box input{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:8px;font-family:Poppins;font-size:14px;margin:6px 0;box-sizing:border-box;}
-.notify-box input:focus{outline:none;border-color:#D4AF37;}
-.notify-submit{width:100%;padding:12px;background:#D4AF37;color:#fff;border:none;border-radius:8px;font-family:Poppins;font-size:14px;cursor:pointer;margin-top:10px;}
-.notify-submit:hover{background:#c09b28;}
-.notify-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#aaa;}
-.notify-close:hover{color:#333;}
-.notify-success{background:#e8f9ee;color:#1a7a3a;border-radius:8px;padding:10px;font-size:13px;margin-top:10px;display:none;}
+@media(max-width:600px){
+  .preview-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-grid{grid-template-columns:1fr;padding:16px}
+  .items-g,.bg-grid{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:1fr}
+  nav{padding:12px 18px}
+  .preview-section{padding:20px 18px}
+}
 </style>
-
-<script>
-let cart=[];
-let currentOrderDetails={};
-let selectedColour="";
-let uploadedFileBase64="";
-let uploadedFileName="";
-
-function showPage(p){
-  ["home","shop","products","cartPage","checkout","upiPage","successPage"]
-  .forEach(id=>document.getElementById(id).classList.add("hidden"));
-  document.getElementById(p).classList.remove("hidden");
-}
-
-function addToCart(name,price,image){
-  let f=cart.find(i=>i.name===name);
-  if(f){f.qty++;}else{cart.push({name,price,image,qty:1});}
-  updateCart();
-}
-
-function updateCart(){
-  document.getElementById("cartCount").innerText=cart.reduce((s,i)=>s+i.qty,0);
-}
-
-function openCategory(name){
-  let top=`<div style="display:flex;justify-content:space-between;padding:20px 100px;"><button onclick="showPage('shop')">&#8592; Back</button>${name==="Bangles"?`<button class="btn" onclick="openCustomize()">&#10024; Customize</button>`:""}</div>`;
-  let content=top+`<h1 style="text-align:center;">${name}</h1><div class="grid">`;
-  if(name==="Chains"){content+=`
-    <div class="card"><img src="chain1.jpeg"><p>Flower Chain</p><p>&#8377;399</p><button class="btn" onclick="addToCart('Flower Chain',399,'chain1.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain2.jpg"><p>Bow Heart Chain</p><p>&#8377;499</p><button class="btn" onclick="addToCart('Bow Heart Chain',499,'chain2.jpg')">ADD</button></div>
-    <div class="card"><img src="chain3.jpeg"><p>Pearl Flower Chain</p><p>&#8377;449</p><button class="btn" onclick="addToCart('Pearl Flower Chain',449,'chain3.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain4.jpeg"><p>Snowflake Chain</p><p>&#8377;379</p><button class="btn" onclick="addToCart('Snowflake Chain',379,'chain4.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain5.jpeg"><p>Crystal Charm Chain</p><p>&#8377;549</p><button class="btn" onclick="addToCart('Crystal Charm Chain',549,'chain5.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain6.jpeg"><p>Teardrop Chain</p><p>&#8377;429</p><button class="btn" onclick="addToCart('Teardrop Chain',429,'chain6.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain7.jpeg"><p>Rectangle Charm Chain</p><p>&#8377;459</p><button class="btn" onclick="addToCart('Rectangle Charm Chain',459,'chain7.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain8.jpeg"><p>Heart Pendant Chain</p><p>&#8377;499</p><button class="btn" onclick="addToCart('Heart Pendant Chain',499,'chain8.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain9.jpeg"><p>Multi Heart Chain</p><p>&#8377;529</p><button class="btn" onclick="addToCart('Multi Heart Chain',529,'chain9.jpeg')">ADD</button></div>
-    <div class="card"><img src="chain10.jpeg"><p>Circle Pendant Chain</p><p>&#8377;389</p><button class="btn" onclick="addToCart('Circle Pendant Chain',389,'chain10.jpeg')">ADD</button></div>
-  `;}
-  if(name==="Bracelets"){content+=`<div class="card"><img src="braceletdisplay.jpeg"><p>&#8377;399</p><button class="btn" onclick="addToCart('Bracelet1',399,'braceletdisplay.jpeg')">ADD</button></div>`;}
-  if(name==="Earrings"){content+=`<div class="card"><img src="earringsdisplay.jpeg"><p>&#8377;299</p><button class="btn" onclick="addToCart('Earring1',299,'earringsdisplay.jpeg')">ADD</button></div>`;}
-  if(name==="Bangles"){content+=`
-    <div class="card"><img src="bangles1.jpeg"><p>Gold Stone Bangles</p><p>&#8377;599</p><button class="btn" onclick="addToCart('Gold Stone Bangles',599,'bangles1.jpeg')">ADD</button></div>
-    <div class="card"><img src="bangles2.jpeg"><p>Yellow Red Silk Bangles</p><p>&#8377;699</p><button class="btn" onclick="addToCart('Yellow Red Silk Bangles',699,'bangles2.jpeg')">ADD</button></div>
-    <div class="card"><img src="bangles3.jpeg"><p>Multicolour Stone Bangles</p><p>&#8377;649</p><button class="btn" onclick="addToCart('Multicolour Stone Bangles',649,'bangles3.jpeg')">ADD</button></div>
-    <div class="card"><img src="bangles4.jpeg"><p>Green Silk Bangles</p><p>&#8377;749</p><button class="btn" onclick="addToCart('Green Silk Bangles',749,'bangles4.jpeg')">ADD</button></div>
-    <div class="card"><img src="bangles5.jpeg"><p>Pink Green Bangles</p><p>&#8377;799</p><button class="btn" onclick="addToCart('Pink Green Bangles',799,'bangles5.jpeg')">ADD</button></div>
-  `;}
-  content+=`</div>`;
-  document.getElementById("products").innerHTML=content;
-  showPage("products");
-}
-
-function showCart(){
-  let html="";let total=0;
-  cart.forEach((i,index)=>{
-    total+=i.price*i.qty;
-    html+=`<div class="cart-item"><img src="${i.image}" width="60"><p>${i.name}</p><div><button onclick="decreaseQty(${index})">&#10134;</button><span style="margin:0 10px;">${i.qty}</span><button onclick="increaseQty(${index})">&#10133;</button></div><p>&#8377;${i.price*i.qty}</p></div>`;
-  });
-  html+=`<h3>Total &#8377;${total}</h3><button class="btn" onclick="showPage('checkout')">Proceed to Checkout</button>`;
-  document.getElementById("cartItems").innerHTML=html;
-  showPage("cartPage");
-}
-
-function increaseQty(i){cart[i].qty++;showCart();updateCart();}
-function decreaseQty(i){if(cart[i].qty>1){cart[i].qty--;}else{cart.splice(i,1);}showCart();updateCart();}
-
-function proceedToUPI(){
-  let name=document.querySelector("input[placeholder='Name']").value.trim();
-  let phone=document.querySelector("input[placeholder='Phone']").value.trim();
-  let address=document.querySelector("input[placeholder='Address']").value.trim();
-  let city=document.querySelector("input[placeholder='City']").value.trim();
-  let pincode=document.querySelector("input[placeholder='Pincode']").value.trim();
-  if(!name||!phone||!address||!city||!pincode){alert("Please fill all details");return;}
-  let total=cart.reduce((s,i)=>s+(i.price*i.qty),0);
-  currentOrderDetails={name,phone,address,city,pincode,total};
-  document.getElementById("upiAmount").innerText="&#8377;"+total;
-  showPage("upiPage");
-}
-
-function confirmOrder(){
-  let txnId=document.getElementById("txnInput").value.trim();
-  if(!txnId){alert("Please enter your UPI Transaction ID");return;}
-
-  let orderItems="";
-  cart.forEach(i=>{orderItems+=i.name+" x "+i.qty+" = Rs."+i.price*i.qty+"\n";});
-
-  emailjs.send("service_123456","template_ORDER",{
-    customer_name:currentOrderDetails.name,
-    phone:currentOrderDetails.phone,
-    address:currentOrderDetails.address+", "+currentOrderDetails.city+" - "+currentOrderDetails.pincode,
-    order_items:orderItems,
-    total:"Rs."+currentOrderDetails.total,
-    txn_id:txnId,
-    email:"ahcollections355@gmail.com"
-  })
-  .then(function(){console.log("Order email sent!");})
-  .catch(function(err){console.error("Order email failed:",JSON.stringify(err));});
-
-  cart=[];updateCart();
-  document.getElementById("successMsg").innerHTML='<div class="success-box">&#10003; <strong>Order Confirmed!</strong><br><br>Thank you, <strong>'+currentOrderDetails.name+'</strong>!<br>Your order worth <strong>Rs.'+currentOrderDetails.total+'</strong> has been placed.<br><br>We will process your order shortly.<br>UPI Txn ID: <strong>'+txnId+'</strong></div><br><button class="btn" onclick="showPage(\'home\')">Continue Shopping</button>';
-  showPage("successPage");
-}
-
-function notifySeller(msg){window.open("https://wa.me/918885580886?text="+msg);}
-
-function openUpiApp(app){
-  const total=currentOrderDetails.total||0;
-  const upiId='yourupiid@upi';
-  const note='AHCollections+Order';
-  const name='AH+Collections';
-  let url='';
-  if(app==='gpay'){url='gpay://upi/pay?pa='+upiId+'&pn='+name+'&am='+total+'&cu=INR&tn='+note;}
-  else if(app==='phonepe'){url='phonepe://pay?pa='+upiId+'&pn='+name+'&am='+total+'&cu=INR&tn='+note;}
-  else if(app==='paytm'){url='paytmmp://pay?pa='+upiId+'&pn='+name+'&am='+total+'&cu=INR&tn='+note;}
-  else if(app==='bhim'){url='upi://pay?pa='+upiId+'&pn='+name+'&am='+total+'&cu=INR&tn='+note;}
-  window.location.href=url;
-  setTimeout(function(){alert('Could not open '+app.toUpperCase()+'. Please scan the QR code above.');},1500);
-}
-
-/* CUSTOMIZE */
-function openCustomize(){
-  document.getElementById("customizePopup").style.display="flex";
-  document.body.style.overflow="hidden";
-}
-function closeCustomize(){
-  document.getElementById("customizePopup").style.display="none";
-  document.body.style.overflow="auto";
-  resetForm();
-}
-function resetForm(){
-  ["cName","cPhone","cSpecs","cImageUrl"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("statusMsg").className="status-msg";
-  document.getElementById("statusMsg").innerText="";
-  selectedColour="";uploadedFileBase64="";uploadedFileName="";
-  document.querySelectorAll(".colour-chip").forEach(c=>c.classList.remove("selected"));
-  document.getElementById("uploadPreview").style.display="none";
-  const btn=document.getElementById("submitBtn");
-  btn.disabled=false;btn.innerText="Submit Request";
-}
-function selectColour(el,colour){
-  document.querySelectorAll(".colour-chip").forEach(c=>c.classList.remove("selected"));
-  el.classList.add("selected");
-  selectedColour=colour;
-}
-function handleFileUpload(input){
-  const file=input.files[0];
-  if(!file)return;
-  if(file.size>5*1024*1024){alert("Image must be under 5MB");return;}
-  uploadedFileName=file.name;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    uploadedFileBase64=e.target.result;
-    const preview=document.getElementById("uploadPreview");
-    preview.style.display="flex";
-    preview.innerHTML='<img src="'+uploadedFileBase64+'"><span>'+file.name+'</span>';
-  };
-  reader.readAsDataURL(file);
-}
-function sendCustomize(){
-  const name=document.getElementById("cName").value.trim();
-  const phone=document.getElementById("cPhone").value.trim();
-  const specs=document.getElementById("cSpecs").value.trim();
-  const imageUrl=document.getElementById("cImageUrl").value.trim();
-  if(!name||!phone){alert("Please fill Name and Phone number");return;}
-  if(!selectedColour){alert("Please select a preferred colour");return;}
-  const btn=document.getElementById("submitBtn");
-  btn.disabled=true;btn.innerText="Sending...";
-  let designImage="Not provided";
-  if(imageUrl){designImage=imageUrl;}
-  else if(uploadedFileBase64){designImage="Image uploaded from gallery. File: "+uploadedFileName;}
-  emailjs.send("service_123456","template_8f7s1ep",{
-    customer_name:name,name:name,phone:phone,colour:selectedColour,
-    specs:specs||"None",design_image:designImage,
-    message:"Name: "+name+"\nPhone: "+phone+"\nColour: "+selectedColour+"\nSpecs: "+(specs||"None")+"\nDesign: "+designImage,
-    email:"ahcollections355@gmail.com",title:"Bangle Customization Request"
-  })
-  .then(function(){
-    const msg=document.getElementById("statusMsg");
-    msg.className="status-msg success";
-    msg.innerText="Your request has been sent! We will contact you soon.";
-    btn.innerText="Sent";
-    setTimeout(()=>closeCustomize(),2500);
-  })
-  .catch(function(err){
-    const msg=document.getElementById("statusMsg");
-    msg.className="status-msg error";
-    msg.innerText="Failed to send. Error: "+(err.text||err.message||JSON.stringify(err));
-    btn.disabled=false;btn.innerText="Submit Request";
-  });
-}
-
-/* NOTIFY ME */
-let currentNotifyProduct='';
-function openNotify(productName){
-  currentNotifyProduct=productName;
-  document.getElementById('notifyProduct').innerText=productName;
-  document.getElementById('notifyName').value='';
-  document.getElementById('notifyPhone').value='';
-  document.getElementById('notifySuccessMsg').style.display='none';
-  document.getElementById('notifyOverlay').style.display='flex';
-  document.body.style.overflow='hidden';
-}
-function closeNotify(){
-  document.getElementById('notifyOverlay').style.display='none';
-  document.body.style.overflow='auto';
-}
-function submitNotify(){
-  const name=document.getElementById('notifyName').value.trim();
-  const phone=document.getElementById('notifyPhone').value.trim();
-  if(!name||!phone){alert('Please fill your name and phone number');return;}
-  const msg='Restock+Alert%0A%0AProduct:+'+encodeURIComponent(currentNotifyProduct)+'%0AName:+'+encodeURIComponent(name)+'%0APhone:+'+encodeURIComponent(phone);
-  document.getElementById('notifySuccessMsg').style.display='block';
-  setTimeout(function(){closeNotify();window.open('https://wa.me/918885580886?text='+msg);},1200);
-}
-</script>
 </head>
 <body>
 
-<!-- NAV -->
-<div class="nav">
-  <div class="logo">AH COLLECTIONS</div>
-  <div>
-    <a onclick="showPage('home')">Home</a>
-    <a onclick="showPage('shop')">Shop</a>
-    <a onclick="showCart()">Cart &#128722; (<span id="cartCount">0</span>)</a>
+<nav>
+  <div class="nav-logo">AH Collections</div>
+  <div class="nav-links">
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('shop')">Shop</button>
+    <button onclick="openM('bangles')">Customize</button>
+    <button>Contact</button>
   </div>
-</div>
+</nav>
 
-<!-- HOME -->
-<div id="home">
+<!-- ════════════════ HOME PAGE ════════════════ -->
+<div id="pg-home" class="page active">
+
   <div class="hero">
-    <img src="logo1.png" style="width:400px;">
-    <div>
-      <h1 class="shimmer-text">Shop Your Favourites</h1>
-      <p>Elegant &amp; timeless pieces</p>
-      <button class="btn" onclick="showPage('shop')">Shop Now</button>
+    <div class="hero-logo-ring">
+      <img src="logo1.png" alt="AH Collections" onerror="this.parentNode.innerHTML='<span style=\'font-size:42px;color:#C9A84C\'>AH</span>'"/>
+    </div>
+    <p class="hero-tag">Handcrafted Thread Bangles &amp; Jewellery</p>
+    <h1>Elegance Crafted<br>For You</h1>
+    <p>Anti-tarnish chains, bracelets, earrings &amp; handcrafted thread bangles — made with love. Customization available.</p>
+    <button class="shop-now-btn" onclick="showPage('shop')">Shop Now</button>
+  </div>
+
+  <div class="avail-bar">
+    <h2>Available With Us</h2>
+    <div class="avail-tags">
+      <span class="avail-tag">Anti-Tarnish Chains</span>
+      <span class="avail-tag">Anti-Tarnish Bracelets</span>
+      <span class="avail-tag">Earrings</span>
+      <span class="avail-tag">Handcrafted Thread Bangles</span>
     </div>
   </div>
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>&#10022; AH COLLECTIONS</span><span class="dot">&#9670;</span>
-      <span>HANDCRAFTED JEWELLERY</span><span class="dot">&#9670;</span>
-      <span>ELEGANT &amp; TIMELESS</span><span class="dot">&#9670;</span>
-      <span>FREE DELIVERY ABOVE &#8377;999</span><span class="dot">&#9670;</span>
-      <span>CUSTOMIZE YOUR BANGLES</span><span class="dot">&#9670;</span>
-      <span>&#10022; AH COLLECTIONS</span><span class="dot">&#9670;</span>
-      <span>HANDCRAFTED JEWELLERY</span><span class="dot">&#9670;</span>
-      <span>ELEGANT &amp; TIMELESS</span><span class="dot">&#9670;</span>
-      <span>FREE DELIVERY ABOVE &#8377;999</span><span class="dot">&#9670;</span>
-      <span>CUSTOMIZE YOUR BANGLES</span><span class="dot">&#9670;</span>
-    </div>
-  </div>
-  <div class="trust-bar">
-    <div class="trust-badge"><div class="icon">&#128666;</div><div><strong>Free Delivery</strong><span>On orders above &#8377;999</span></div></div>
-    <div class="trust-badge"><div class="icon">&#128274;</div><div><strong>Secure Payment</strong><span>100% safe UPI checkout</span></div></div>
-    <div class="trust-badge"><div class="icon">&#9995;</div><div><strong>Handcrafted</strong><span>Unique artisan pieces</span></div></div>
-    <div class="trust-badge"><div class="icon">&#8617;</div><div><strong>Easy Returns</strong><span>Hassle-free 7 day return</span></div></div>
-  </div>
-  <h2 style="text-align:center;">Our Collections</h2>
-  <div class="grid">
-    <div class="card" onclick="openCategory('Chains')"><img src="chaindisplay.jpeg"><p>Chains</p></div>
-    <div class="card" onclick="openCategory('Bracelets')"><img src="braceletdisplay.jpeg"><p>Bracelets</p></div>
-    <div class="card" onclick="openCategory('Earrings')"><img src="earringsdisplay.jpeg"><p>Earrings</p></div>
-    <div class="card" onclick="openCategory('Bangles')"><img src="banglesdisplay.jpeg"><p>Bangles</p></div>
-  </div>
-</div>
 
-<!-- SHOP -->
-<div id="shop" class="hidden">
-  <button onclick="showPage('home')" style="margin:20px;">&#8592; Back</button>
-  <h2 style="text-align:center;">Collections</h2>
-  <div class="grid">
-    <div class="card" onclick="openCategory('Chains')"><img src="chaindisplay.jpeg"><p>Chains</p></div>
-    <div class="card" onclick="openCategory('Bracelets')"><img src="braceletdisplay.jpeg"><p>Bracelets</p></div>
-    <div class="card" onclick="openCategory('Earrings')"><img src="earringsdisplay.jpeg"><p>Earrings</p></div>
-    <div class="card" onclick="openCategory('Bangles')"><img src="banglesdisplay.jpeg"><p>Bangles</p></div>
-  </div>
-</div>
+  <div class="preview-section">
+    <h2>Our Collections — Click to Explore</h2>
+    <div class="preview-grid">
 
-<!-- PRODUCTS -->
-<div id="products" class="hidden"></div>
-
-<!-- CART -->
-<div id="cartPage" class="hidden">
-  <div class="center-box">
-    <button onclick="showPage('shop')">&#8592; Back</button>
-    <h2>Cart</h2>
-    <div id="cartItems"></div>
-  </div>
-</div>
-
-<!-- CHECKOUT -->
-<div id="checkout" class="hidden">
-  <div class="center-box">
-    <button onclick="showPage('cartPage')">&#8592; Back</button>
-    <h2>Customer Details</h2>
-    <input placeholder="Name">
-    <input placeholder="Phone">
-    <input placeholder="Address">
-    <input placeholder="City">
-    <input placeholder="Pincode">
-    <br>
-    <button class="btn" onclick="proceedToUPI()" style="margin-top:15px;">Pay via UPI &#10145;</button>
-  </div>
-</div>
-
-<!-- UPI PAGE -->
-<div id="upiPage" class="hidden">
-  <div class="center-box">
-    <button onclick="showPage('checkout')">&#8592; Back</button>
-    <h2>Pay via UPI</h2>
-    <div class="upi-box">
-      <p style="margin:0;color:#555;font-size:13px;">Scan QR or use UPI ID below</p>
-      <img src="phonepescanner.jpeg" alt="UPI QR Code" style="width:200px;margin:10px auto;display:block;border-radius:10px;border:2px solid #D4AF37;">
-      <div class="upi-id">yourupiid@upi</div>
-      <div class="upi-amount" id="upiAmount">&#8377;0</div>
-      <p style="font-size:12px;color:#888;margin:8px 0 6px;">Tap to open your UPI app directly:</p>
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:10px 0;">
-        <button onclick="openUpiApp('gpay')" style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:#fff;border:1px solid #D4AF37;border-radius:8px;cursor:pointer;font-family:Poppins;font-size:13px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/512px-Google_Pay_Logo.svg.png" style="width:20px;height:20px;object-fit:contain;"> GPay
-        </button>
-        <button onclick="openUpiApp('phonepe')" style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:#fff;border:1px solid #D4AF37;border-radius:8px;cursor:pointer;font-family:Poppins;font-size:13px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/PhonePe_Logo.png/640px-PhonePe_Logo.png" style="width:20px;height:20px;object-fit:contain;"> PhonePe
-        </button>
-        <button onclick="openUpiApp('paytm')" style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:#fff;border:1px solid #D4AF37;border-radius:8px;cursor:pointer;font-family:Poppins;font-size:13px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/2560px-Paytm_Logo_%28standalone%29.svg.png" style="width:20px;height:20px;object-fit:contain;"> Paytm
-        </button>
-        <button onclick="openUpiApp('bhim')" style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:#fff;border:1px solid #D4AF37;border-radius:8px;cursor:pointer;font-family:Poppins;font-size:13px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BHIM_SVG_Logo.svg/1200px-BHIM_SVG_Logo.svg.png" style="width:20px;height:20px;object-fit:contain;"> BHIM
-        </button>
+      <!-- CHAIN preview card -->
+      <div class="preview-card" onclick="openM('chains')">
+        <div class="img-box" onclick="triggerUpload(event,'home-chain-img','home-chain-file')">
+          <img id="home-chain-img" src="" alt="" style="display:none"/>
+          <span class="placeholder" id="home-chain-ph">📿</span>
+          <div class="upload-overlay">
+            <span class="u-icon">📷</span>
+            <span>Add your image</span>
+          </div>
+          <input type="file" id="home-chain-file" accept="image/*" onchange="previewImg(this,'home-chain-img','home-chain-ph')"/>
+        </div>
+        <div class="card-label"><h3>Chains</h3><p>Anti-tarnish gold chains</p></div>
       </div>
-      <div class="upi-steps"><strong>Steps:</strong><br>1. Tap your UPI app above<br>2. App opens with amount pre-filled<br>3. Complete the payment<br>4. Copy Transaction ID &amp; enter below</div>
-    </div>
-    <div style="margin-top:20px;">
-      <h3>Enter UPI Transaction ID</h3>
-      <input id="txnInput" placeholder="e.g. 123456789012" style="max-width:300px;margin:10px auto;display:block;">
-      <br>
-      <button class="btn" onclick="confirmOrder()">Confirm Order &#10003;</button>
+
+      <!-- BRACELET preview card -->
+      <div class="preview-card" onclick="openM('bracelets')">
+        <div class="img-box" onclick="triggerUpload(event,'home-brac-img','home-brac-file')">
+          <img id="home-brac-img" src="" alt="" style="display:none"/>
+          <span class="placeholder" id="home-brac-ph">💛</span>
+          <div class="upload-overlay">
+            <span class="u-icon">📷</span>
+            <span>Add your image</span>
+          </div>
+          <input type="file" id="home-brac-file" accept="image/*" onchange="previewImg(this,'home-brac-img','home-brac-ph')"/>
+        </div>
+        <div class="card-label"><h3>Bracelets</h3><p>Anti-tarnish bracelets</p></div>
+      </div>
+
+      <!-- EARRING preview card -->
+      <div class="preview-card" onclick="openM('earrings')">
+        <div class="img-box" onclick="triggerUpload(event,'home-ear-img','home-ear-file')">
+          <img id="home-ear-img" src="" alt="" style="display:none"/>
+          <span class="placeholder" id="home-ear-ph">✨</span>
+          <div class="upload-overlay">
+            <span class="u-icon">📷</span>
+            <span>Add your image</span>
+          </div>
+          <input type="file" id="home-ear-file" accept="image/*" onchange="previewImg(this,'home-ear-img','home-ear-ph')"/>
+        </div>
+        <div class="card-label"><h3>Earrings</h3><p>For every occasion</p></div>
+      </div>
+
+      <!-- BANGLE preview card -->
+      <div class="preview-card" onclick="openM('bangles')">
+        <div class="img-box" onclick="triggerUpload(event,'home-ban-img','home-ban-file')">
+          <img id="home-ban-img" src="" alt="" style="display:none"/>
+          <span class="placeholder" id="home-ban-ph">🪬</span>
+          <div class="upload-overlay">
+            <span class="u-icon">📷</span>
+            <span>Add your image</span>
+          </div>
+          <input type="file" id="home-ban-file" accept="image/*" onchange="previewImg(this,'home-ban-img','home-ban-ph')"/>
+        </div>
+        <div class="card-label"><h3>Thread Bangles</h3><p>Handcrafted &amp; customizable</p></div>
+      </div>
+
     </div>
   </div>
+
+  <footer><div class="fl">AH Collections</div><p>© 2025 AH Collections · Ships Pan India · COD &amp; UPI Available</p></footer>
 </div>
 
-<!-- SUCCESS -->
-<div id="successPage" class="hidden">
-  <div class="center-box">
-    <h2>Thank You!</h2>
-    <div id="successMsg"></div>
+<!-- ════════════════ SHOP PAGE ════════════════ -->
+<div id="pg-shop" class="page">
+  <div class="shop-hdr">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <h2>Our Collections</h2>
+    <p>Tap any category to see designs &amp; order</p>
   </div>
-</div>
 
-<!-- CUSTOMIZE POPUP -->
-<div id="customizePopup" class="popup-overlay">
-  <div class="popup-box">
-    <button class="close-btn" onclick="closeCustomize()">&#10005;</button>
-    <h2>&#10024; Customize Your Bangles</h2>
-    <p class="subtitle">Fill in your details and we'll craft it just for you</p>
-    <div class="form-group">
-      <label>Your Name</label>
-      <input id="cName" type="text" placeholder="e.g. Anitha">
-    </div>
-    <div class="form-group">
-      <label>Phone Number</label>
-      <input id="cPhone" type="tel" placeholder="e.g. 9876543210">
-    </div>
-    <div class="form-group">
-      <label>Preferred Colour</label>
-      <div class="colour-options">
-        <div class="colour-chip" onclick="selectColour(this,'Gold')">Gold</div>
-        <div class="colour-chip" onclick="selectColour(this,'Silver')">Silver</div>
-        <div class="colour-chip" onclick="selectColour(this,'Rose Gold')">Rose Gold</div>
-        <div class="colour-chip" onclick="selectColour(this,'Antique')">Antique</div>
-        <div class="colour-chip" onclick="selectColour(this,'Multi-colour')">Multi-colour</div>
-        <div class="colour-chip" onclick="selectColour(this,'Other')">Other</div>
+  <div class="cat-grid">
+
+    <!-- CHAINS shop card -->
+    <div class="cat-card">
+      <div class="cat-img-box" onclick="triggerUpload(event,'shop-chain-img','shop-chain-file')">
+        <img id="shop-chain-img" src="" alt="" style="display:none"/>
+        <span class="placeholder" id="shop-chain-ph">📿</span>
+        <div class="cat-upload-ov">
+          <span class="u-icon">📷</span>
+          <span>Add collection image</span>
+        </div>
+        <input type="file" id="shop-chain-file" accept="image/*" onchange="previewImg(this,'shop-chain-img','shop-chain-ph')"/>
+      </div>
+      <div class="cat-info" onclick="openM('chains')">
+        <h3>Anti-Tarnish Chains</h3>
+        <p>Skin-safe gold-finish chains for daily wear — stays beautiful longer</p>
+        <span class="cat-tag">Anti-Tarnish</span>
       </div>
     </div>
-    <div class="form-group">
-      <label>Specifications <span class="optional-tag">(optional)</span></label>
-      <textarea id="cSpecs" placeholder="e.g. Size 2.6, thin design, no stones, matte finish..."></textarea>
-    </div>
-    <div class="form-group">
-      <label>Upload Design Image <span class="optional-tag">(optional)</span></label>
-      <div class="upload-area">
-        <input type="file" accept="image/*" onchange="handleFileUpload(this)">
-        <p>Click to upload from gallery</p>
-        <span>Supports JPG, PNG, WEBP · Max 5MB</span>
+
+    <!-- BRACELETS shop card -->
+    <div class="cat-card">
+      <div class="cat-img-box" onclick="triggerUpload(event,'shop-brac-img','shop-brac-file')">
+        <img id="shop-brac-img" src="" alt="" style="display:none"/>
+        <span class="placeholder" id="shop-brac-ph">💛</span>
+        <div class="cat-upload-ov">
+          <span class="u-icon">📷</span>
+          <span>Add collection image</span>
+        </div>
+        <input type="file" id="shop-brac-file" accept="image/*" onchange="previewImg(this,'shop-brac-img','shop-brac-ph')"/>
       </div>
-      <div id="uploadPreview" class="upload-preview"></div>
+      <div class="cat-info" onclick="openM('bracelets')">
+        <h3>Anti-Tarnish Bracelets</h3>
+        <p>Beautiful bracelets that don't leave marks — perfect for all skin tones</p>
+        <span class="cat-tag">Bestseller</span>
+      </div>
     </div>
-    <div class="url-divider">or paste image link from Google</div>
-    <div class="form-group">
-      <label>Design Image Link <span class="optional-tag">(optional)</span></label>
-      <input id="cImageUrl" type="url" placeholder="https://images.google.com/...">
-      <p style="font-size:12px;color:#a07d10;margin:6px 0 0;background:#fffdf5;border-left:3px solid #D4AF37;padding:6px 10px;border-radius:0 6px 6px 0;">
-        Tip: On Google Images, right-click your design image, copy image address and paste it here.
-      </p>
+
+    <!-- EARRINGS shop card -->
+    <div class="cat-card">
+      <div class="cat-img-box" onclick="triggerUpload(event,'shop-ear-img','shop-ear-file')">
+        <img id="shop-ear-img" src="" alt="" style="display:none"/>
+        <span class="placeholder" id="shop-ear-ph">✨</span>
+        <div class="cat-upload-ov">
+          <span class="u-icon">📷</span>
+          <span>Add collection image</span>
+        </div>
+        <input type="file" id="shop-ear-file" accept="image/*" onchange="previewImg(this,'shop-ear-img','shop-ear-ph')"/>
+      </div>
+      <div class="cat-info" onclick="openM('earrings')">
+        <h3>Earrings</h3>
+        <p>Studs, jhumkas, hoops &amp; chandelier styles for every occasion</p>
+        <span class="cat-tag">New Designs</span>
+      </div>
     </div>
-    <div id="statusMsg" class="status-msg"></div>
-    <button id="submitBtn" class="submit-btn" onclick="sendCustomize()">Submit Request</button>
+
+    <!-- BANGLES shop card -->
+    <div class="cat-card">
+      <div class="cat-img-box" onclick="triggerUpload(event,'shop-ban-img','shop-ban-file')">
+        <img id="shop-ban-img" src="" alt="" style="display:none"/>
+        <span class="placeholder" id="shop-ban-ph">🪬</span>
+        <div class="cat-upload-ov">
+          <span class="u-icon">📷</span>
+          <span>Add collection image</span>
+        </div>
+        <input type="file" id="shop-ban-file" accept="image/*" onchange="previewImg(this,'shop-ban-img','shop-ban-ph')"/>
+      </div>
+      <div class="cat-info" onclick="openM('bangles')">
+        <h3>Handcrafted Thread Bangles</h3>
+        <p>Traditional thread bangles with gold accents — customization available</p>
+        <span class="cat-tag">Customizable</span>
+      </div>
+    </div>
+
   </div>
+  <footer><div class="fl">AH Collections</div><p>© 2025 AH Collections · Ships Pan India</p></footer>
 </div>
 
-<!-- NOTIFY ME POPUP -->
-<div id="notifyOverlay" class="notify-overlay">
-  <div class="notify-box">
-    <button class="notify-close" onclick="closeNotify()">&#10005;</button>
-    <h3>Notify Me</h3>
-    <p><strong id="notifyProduct"></strong> is currently sold out.<br>Leave your details and we'll contact you when it's back!</p>
-    <input id="notifyName" type="text" placeholder="Your Name">
-    <input id="notifyPhone" type="tel" placeholder="Phone Number">
-    <button class="notify-submit" onclick="submitNotify()">Notify Me</button>
-    <div id="notifySuccessMsg" class="notify-success">Saved! We will contact you when it's back in stock.</div>
+<!-- ════════════════ MODAL OVERLAY ════════════════ -->
+<div class="overlay" id="overlay" onclick="closeOutside(event)">
+<div class="modal" id="mbox">
+
+  <!-- ── CHAINS MODAL ── -->
+  <div id="mc-chains" class="mc" style="display:none">
+    <div class="mhdr"><h3>📿 Anti-Tarnish Chains</h3><button class="mclose" onclick="closeM()">&#x2715;</button></div>
+    <div class="modal-hero-img" onclick="triggerUpload(event,'mh-chain-img','mh-chain-file')">
+      <img id="mh-chain-img" src="" alt="" style="display:none"/>
+      <span class="placeholder" id="mh-chain-ph">📿</span>
+      <div class="mhi-overlay"><span class="u-icon">📷</span><span>Upload collection photo</span></div>
+      <input type="file" id="mh-chain-file" accept="image/*" onchange="previewImg(this,'mh-chain-img','mh-chain-ph')"/>
+    </div>
+    <div class="mbody">
+      <p style="font-size:13px;color:#6B5320;margin-bottom:4px;line-height:1.6">Anti-tarnish chains crafted with skin-safe materials — stays beautiful with daily wear.</p>
+      <div class="items-label">Our Chain Designs</div>
+      <div class="items-g">
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci1-img','ci1-file')">
+            <img id="ci1-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci1-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci1-file" accept="image/*" onchange="previewImg(this,'ci1-img','ci1-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Figaro Chain</h4><p>Classic 18" pattern</p><div class="pr">₹399</div></div>
+        </div>
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci2-img','ci2-file')">
+            <img id="ci2-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci2-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci2-file" accept="image/*" onchange="previewImg(this,'ci2-img','ci2-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Box Chain</h4><p>Square elegant links</p><div class="pr">₹449</div></div>
+        </div>
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci3-img','ci3-file')">
+            <img id="ci3-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci3-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci3-file" accept="image/*" onchange="previewImg(this,'ci3-img','ci3-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Rope Chain</h4><p>Twisted design</p><div class="pr">₹499</div></div>
+        </div>
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci4-img','ci4-file')">
+            <img id="ci4-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci4-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci4-file" accept="image/*" onchange="previewImg(this,'ci4-img','ci4-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Singapore</h4><p>Delicate twisted</p><div class="pr">₹379</div></div>
+        </div>
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci5-img','ci5-file')">
+            <img id="ci5-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci5-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci5-file" accept="image/*" onchange="previewImg(this,'ci5-img','ci5-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Cuban Link</h4><p>Bold &amp; trendy</p><div class="pr">₹549</div></div>
+        </div>
+        <div class="ic">
+          <div class="item-img" onclick="triggerUpload(event,'ci6-img','ci6-file')">
+            <img id="ci6-img" src="" alt="" style="display:none"/><span class="placeholder" id="ci6-ph">📿</span>
+            <div class="iov"><span class="u-icon">📷</span><span>Add image</span></div>
+            <input type="file" id="ci6-file" accept="image/*" onchange="previewImg(this,'ci6-img','ci6-ph')"/>
+          </div>
+          <div class="ic-info"><h4>Heart Pendant</h4><p>Chain + heart charm</p><div class="pr">₹479</div></div>
+        </div>
+      </div>
+      <div class="order-note">To order, DM us on Instagram <strong>@ah_collections</strong> or WhatsApp us!</div>
+    </div>
   </div>
+
+  <!-- ── BRACELETS MODAL ── -->
+  <div id="mc-bracelets" class="mc" style="display:none">
+    <div class="mhdr"><h3>💛 Anti-Tarnish Bracelets</h3><button class="mclose" onclick="closeM()">&#x2715;</button></div>
+    <div class="modal-hero-img" onclick="triggerUpload(event,'mh-brac-img','mh-brac-file')">
+      <img id="mh-brac-img" src="" alt="" style="display:none"/>
+      <span class="placeholder" id="mh-brac-ph">💛</span>
+      <div class="mhi-overlay"><span class="u-icon">📷</span><span>Upload collection photo</span></div>
+      <input type="file" id="mh-brac-file" accept="image/*" onchange="previewImg(this,'mh-brac-img','mh-brac-ph')"/>
+    </div>
+    <div class="mbody">
+      <p style="font-size:13px;color:#6B5320;margin-bottom:4px;line-height:1.6">Crafted with anti-tarnish material — stays radiant on your wrist every day.</p>
+      <div class="items-label">Our Bracelet Designs</div>
+      <div class="items-g">
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi1-img','bi1-file')"><img id="bi1-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi1-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi1-file" accept="image/*" onchange="previewImg(this,'bi1-img','bi1-ph')"/></div><div class="ic-info"><h4>Slim Tennis</h4><p>Dainty everyday</p><div class="pr">₹349</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi2-img','bi2-file')"><img id="bi2-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi2-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi2-file" accept="image/*" onchange="previewImg(this,'bi2-img','bi2-ph')"/></div><div class="ic-info"><h4>Charm Bracelet</h4><p>With mini charms</p><div class="pr">₹429</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi3-img','bi3-file')"><img id="bi3-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi3-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi3-file" accept="image/*" onchange="previewImg(this,'bi3-img','bi3-ph')"/></div><div class="ic-info"><h4>Cuff Bracelet</h4><p>Open-end gold cuff</p><div class="pr">₹499</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi4-img','bi4-file')"><img id="bi4-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi4-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi4-file" accept="image/*" onchange="previewImg(this,'bi4-img','bi4-ph')"/></div><div class="ic-info"><h4>Link Bracelet</h4><p>Bold chain-link</p><div class="pr">₹469</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi5-img','bi5-file')"><img id="bi5-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi5-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi5-file" accept="image/*" onchange="previewImg(this,'bi5-img','bi5-ph')"/></div><div class="ic-info"><h4>Bangle Bracelet</h4><p>Classic solid</p><div class="pr">₹389</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'bi6-img','bi6-file')"><img id="bi6-img" src="" alt="" style="display:none"/><span class="placeholder" id="bi6-ph">💛</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bi6-file" accept="image/*" onchange="previewImg(this,'bi6-img','bi6-ph')"/></div><div class="ic-info"><h4>Name Bracelet</h4><p>Custom engraved</p><div class="pr">₹599</div></div></div>
+      </div>
+      <div class="order-note">To order, DM us on Instagram <strong>@ah_collections</strong> or WhatsApp us!</div>
+    </div>
+  </div>
+
+  <!-- ── EARRINGS MODAL ── -->
+  <div id="mc-earrings" class="mc" style="display:none">
+    <div class="mhdr"><h3>✨ Earrings</h3><button class="mclose" onclick="closeM()">&#x2715;</button></div>
+    <div class="modal-hero-img" onclick="triggerUpload(event,'mh-ear-img','mh-ear-file')">
+      <img id="mh-ear-img" src="" alt="" style="display:none"/>
+      <span class="placeholder" id="mh-ear-ph">✨</span>
+      <div class="mhi-overlay"><span class="u-icon">📷</span><span>Upload collection photo</span></div>
+      <input type="file" id="mh-ear-file" accept="image/*" onchange="previewImg(this,'mh-ear-img','mh-ear-ph')"/>
+    </div>
+    <div class="mbody">
+      <p style="font-size:13px;color:#6B5320;margin-bottom:4px;line-height:1.6">From simple studs for every day to grand chandeliers for celebrations.</p>
+      <div class="items-label">Our Earring Designs</div>
+      <div class="items-g">
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei1-img','ei1-file')"><img id="ei1-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei1-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei1-file" accept="image/*" onchange="previewImg(this,'ei1-img','ei1-ph')"/></div><div class="ic-info"><h4>Gold Studs</h4><p>Simple everyday</p><div class="pr">₹279</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei2-img','ei2-file')"><img id="ei2-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei2-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei2-file" accept="image/*" onchange="previewImg(this,'ei2-img','ei2-ph')"/></div><div class="ic-info"><h4>Drop Earrings</h4><p>Graceful single drop</p><div class="pr">₹349</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei3-img','ei3-file')"><img id="ei3-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei3-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei3-file" accept="image/*" onchange="previewImg(this,'ei3-img','ei3-ph')"/></div><div class="ic-info"><h4>Jhumkas</h4><p>Traditional bell</p><div class="pr">₹429</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei4-img','ei4-file')"><img id="ei4-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei4-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei4-file" accept="image/*" onchange="previewImg(this,'ei4-img','ei4-ph')"/></div><div class="ic-info"><h4>Hoops</h4><p>Classic gold hoops</p><div class="pr">₹319</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei5-img','ei5-file')"><img id="ei5-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei5-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei5-file" accept="image/*" onchange="previewImg(this,'ei5-img','ei5-ph')"/></div><div class="ic-info"><h4>Chandeliers</h4><p>Grand festive style</p><div class="pr">₹549</div></div></div>
+        <div class="ic"><div class="item-img" onclick="triggerUpload(event,'ei6-img','ei6-file')"><img id="ei6-img" src="" alt="" style="display:none"/><span class="placeholder" id="ei6-ph">✨</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="ei6-file" accept="image/*" onchange="previewImg(this,'ei6-img','ei6-ph')"/></div><div class="ic-info"><h4>Ear Cuffs</h4><p>Trendy no-pierce</p><div class="pr">₹299</div></div></div>
+      </div>
+      <div class="order-note">To order, DM us on Instagram <strong>@ah_collections</strong> or WhatsApp us!</div>
+    </div>
+  </div>
+
+  <!-- ── BANGLES MODAL ── -->
+  <div id="mc-bangles" class="mc" style="display:none">
+    <div class="mhdr"><h3>🪬 Handcrafted Thread Bangles</h3><button class="mclose" onclick="closeM()">&#x2715;</button></div>
+    <div class="modal-hero-img" onclick="triggerUpload(event,'mh-ban-img','mh-ban-file')">
+      <img id="mh-ban-img" src="" alt="" style="display:none"/>
+      <span class="placeholder" id="mh-ban-ph">🪬</span>
+      <div class="mhi-overlay"><span class="u-icon">📷</span><span>Upload collection photo</span></div>
+      <input type="file" id="mh-ban-file" accept="image/*" onchange="previewImg(this,'mh-ban-img','mh-ban-ph')"/>
+    </div>
+    <div class="mbody">
+      <p style="font-size:13px;color:#6B5320;margin-bottom:4px;line-height:1.6">Handcrafted thread bangles with gold accents — perfect for weddings, festivals &amp; everyday elegance.</p>
+      <div class="items-label">Our Bangle Designs</div>
+      <div class="bg-grid">
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi1-img','bgi1-file')"><img id="bgi1-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi1-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi1-file" accept="image/*" onchange="previewImg(this,'bgi1-img','bgi1-ph')"/></div><div class="bc-info"><h4>Classic Red</h4><p>Red thread + gold beads</p><div class="bp">₹299</div></div></div>
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi2-img','bgi2-file')"><img id="bgi2-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi2-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi2-file" accept="image/*" onchange="previewImg(this,'bgi2-img','bgi2-ph')"/></div><div class="bc-info"><h4>Bridal Set</h4><p>White &amp; gold thread</p><div class="bp">₹599</div></div></div>
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi3-img','bgi3-file')"><img id="bgi3-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi3-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi3-file" accept="image/*" onchange="previewImg(this,'bgi3-img','bgi3-ph')"/></div><div class="bc-info"><h4>Festive Duo</h4><p>Green &amp; gold</p><div class="bp">₹399</div></div></div>
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi4-img','bgi4-file')"><img id="bgi4-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi4-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi4-file" accept="image/*" onchange="previewImg(this,'bgi4-img','bgi4-ph')"/></div><div class="bc-info"><h4>Silk Thread</h4><p>Multicolour silk</p><div class="bp">₹349</div></div></div>
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi5-img','bgi5-file')"><img id="bgi5-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi5-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi5-file" accept="image/*" onchange="previewImg(this,'bgi5-img','bgi5-ph')"/></div><div class="bc-info"><h4>Stone Accent</h4><p>Thread + stone charm</p><div class="bp">₹449</div></div></div>
+        <div class="bc"><div class="bi-img" onclick="triggerUpload(event,'bgi6-img','bgi6-file')"><img id="bgi6-img" src="" alt="" style="display:none"/><span class="placeholder" id="bgi6-ph">🪬</span><div class="iov"><span class="u-icon">📷</span><span>Add image</span></div><input type="file" id="bgi6-file" accept="image/*" onchange="previewImg(this,'bgi6-img','bgi6-ph')"/></div><div class="bc-info"><h4>Custom Set</h4><p>Your design, your choice</p><div class="bp">From ₹499</div></div></div>
+      </div>
+
+      <div class="ct">Customize Your Bangles</div>
+      <p style="font-size:12px;color:#8B7040;margin-bottom:14px;line-height:1.5">Fill in your preferences below and we'll craft your dream bangles just for you!</p>
+
+      <form id="cform" onsubmit="submitF(event)">
+        <div class="frow">
+          <div class="fg"><label>Your Name</label><input type="text" placeholder="e.g. Priya" required/></div>
+          <div class="fg"><label>WhatsApp Number</label><input type="tel" placeholder="9876543210" required/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Thread Colour</label>
+            <select>
+              <option value="">Choose colour</option>
+              <option>Red</option><option>White</option><option>Green</option>
+              <option>Blue</option><option>Pink</option><option>Yellow</option>
+              <option>Purple</option><option>Orange</option><option>Multicolour</option>
+              <option>Custom (describe below)</option>
+            </select>
+          </div>
+          <div class="fg"><label>Gold Accent Style</label>
+            <select>
+              <option value="">Choose style</option>
+              <option>Plain Gold Beads</option><option>Gold Charm Pendant</option>
+              <option>Gold Coil Wrap</option><option>Stone + Gold</option>
+              <option>No Gold Accent</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Bangle Size (cm)</label><input type="text" placeholder="e.g. 2.4 or wrist size"/></div>
+          <div class="fg"><label>Quantity</label>
+            <select>
+              <option>1 bangle</option><option>2 bangles</option>
+              <option>4 bangles (set)</option><option>6 bangles (set)</option>
+              <option>Custom quantity</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg full"><label>Design Notes / Special Request</label>
+            <textarea placeholder="Describe your design idea, occasion, colour combination, patterns, or any special request..."></textarea>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg full"><label>Reference Image (optional)</label>
+            <div class="fup" onclick="document.getElementById('rimg').click()">
+              <input type="file" id="rimg" accept="image/*" onchange="showFN(this)"/>
+              <div style="font-size:26px;color:var(--gold)">📎</div>
+              <p>Click to upload a reference image</p>
+              <span>JPG, PNG, WEBP supported</span>
+              <div id="rfn" style="font-size:11px;color:var(--gold-dark);margin-top:4px"></div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="sbtn">Send My Customization Request</button>
+        <div class="smsg" id="smsg">✅ Request received! We'll contact you on WhatsApp within 24 hours.</div>
+      </form>
+    </div>
+  </div>
+
+</div>
 </div>
 
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('pg-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openM(t){
+  document.querySelectorAll('.mc').forEach(function(m){m.style.display='none'});
+  document.getElementById('mc-'+t).style.display='block';
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeM(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeOutside(e){
+  if(e.target===document.getElementById('overlay'))closeM();
+}
+function triggerUpload(e,imgId,fileId){
+  e.stopPropagation();
+  document.getElementById(fileId).click();
+}
+function previewImg(input,imgId,phId){
+  if(input.files && input.files[0]){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var img=document.getElementById(imgId);
+      var ph=document.getElementById(phId);
+      img.src=e.target.result;
+      img.style.display='block';
+      if(ph)ph.style.display='none';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function showFN(input){
+  document.getElementById('rfn').textContent=input.files.length?'✓ '+input.files[0].name:'';
+}
+function submitF(e){
+  e.preventDefault();
+  document.getElementById('smsg').style.display='block';
+  var btn=e.target.querySelector('.sbtn');
+  btn.textContent='Request Sent ✓';
+  btn.style.background='#639922';
+  btn.disabled=true;
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
+</script>
 </body>
 </html>
